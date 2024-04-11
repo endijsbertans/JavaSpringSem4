@@ -15,32 +15,36 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-@AllArgsConstructor
+//@AllArgsConstructor
 public class Product {
+	
+	private int id;
+	
+	private static int counter;
+	
 	@NotNull
-	@Pattern(regexp = "[A-Z][a-z]+")
+	@Pattern(regexp = "[A-Z]{1}[a-z ]+")
 	@Size(min = 3, max = 20)
 	private String title;
 	
 	@NotNull
-	@Pattern(regexp = "[A-Z][a-z]+")
-	@Size(min = 3, max = 200)
+	@Pattern(regexp = "[A-Za-z]+")
+	@Size(min = 4, max = 200)
 	private String description;
+	
+	@Min(0)
+	@Max(10000)
+	private float price;
 	
 	@Min(0)
 	@Max(100)
 	private int quantity;
 	
-	@Min(0)
-	@Max(1000)
-	private float price;
-
-	private int id;
-	private static int counter = 0;
 	public void setId() {
 		this.id = counter;
 		counter++;
 	}
+
 	public Product(String title, String description, float price, int quantity) {
 		setId();
 		setTitle(title);
@@ -49,4 +53,5 @@ public class Product {
 		setQuantity(quantity);
 		
 	}
+
 }

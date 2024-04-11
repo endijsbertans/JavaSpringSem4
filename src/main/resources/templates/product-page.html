@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
 
-  <head>
-    <title>Good Thymes Virtual Grocery</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<body>
+	<table>
+		<tr th:each="tempPr: ${myobjs}">
+				<td th:text = "${tempPr.getId()}"></td>
+				<td th:text = "${tempPr.getTitle()}"></td>
+				<td th:text = "${tempPr.getDescription()}"></td>
+				<td th:text = "${tempPr.getPrice()}"></td>
+				<td th:text = "${tempPr.getQuantity()}"></td>
 
-  </head>
-
-  <body>
-  
-    <p th:text="${zemene.getId()}"></p>
-	<p th:text="${zemene.getTitle()}"></p>
-	<p th:text="${zemene.getPrice()}"></p>
-	<p th:text="${zemene.getQuantity()}"></p>
-	<p th:text="${zemene}"></p>
-  </body>
+		</tr>	
+	</table>
+</body>
 
 </html>
