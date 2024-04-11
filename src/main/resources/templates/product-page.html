@@ -1,6 +1,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
+	<nav class="nav">
+	        <ul>
+	          <li>
+	            <a href="http://localhost:8080/product/all">All Products</a>
+	          </li>
+	          <li>
+	          <a href="http://localhost:8080/product/test">Product test</a>
+	          </li>
+	          <li>
+	            <a href="http://localhost:8080/hello/msg">Hello msg</a>
+	          </li>
+	          <li>
+	            <a href="https://github.com/endijsbertans/JavaSpringSem4" target="_blank">Git</a>
+	          </li>
+	        </ul>
+	      </nav>
 	<table>
 		<tr th:each="tempPr: ${myobjs}">
 				<td th:text = "${tempPr.getId()}"></td>
