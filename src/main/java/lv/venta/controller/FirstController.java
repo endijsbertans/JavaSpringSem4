@@ -16,8 +16,7 @@ import lv.venta.Product;
 
 @Controller
 public class FirstController {
-	ArrayList<Product> allProducts = 
-			new ArrayList<>();
+
 	
 	@GetMapping("/hello") //localhost:8080/hello
 	public String getHello() {
@@ -46,12 +45,7 @@ public class FirstController {
 	
 	@GetMapping("/product/all")//localhost:8080/product/all
 	public String getProductAll(Model model) {
-		Product myProduct1 = new Product("Abols", "Sarkans", 0.99f, 5);
-		Product myProduct2 = new Product("Zemene", "Salda", 1.23f, 3);
-		Product myProduct3 = new Product("Arbuzs", "Roza", 3.99f, 2);
-		allProducts.add(myProduct1);
-		allProducts.add(myProduct2);
-		allProducts.add(myProduct3);
+
 		model.addAttribute("myobjs", allProducts);
 		return "product-page"; //tiek parādīta show-product-all-page.html lapa
 	}

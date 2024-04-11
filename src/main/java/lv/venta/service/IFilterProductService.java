@@ -10,7 +10,7 @@ public interface IFilterProductService {
 	filterProductByQuantityTreshold(int quantityTreshold) throws Exception;
 	
 	public abstract ArrayList<Product>
-	filterByTitleOrDescription(String title, String description) throws Exception;
+	filterByTitleOrDescription(String searchText) throws Exception;
 	
 	
 }

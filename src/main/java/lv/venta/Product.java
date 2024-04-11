@@ -20,7 +20,7 @@ public class Product {
 	
 	private int id;
 	
-	private static int counter;
+	private static int counter = 0;
 	
 	@NotNull
 	@Pattern(regexp = "[A-Z]{1}[a-z ]+")
