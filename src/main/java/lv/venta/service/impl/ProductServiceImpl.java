@@ -17,13 +17,17 @@ public class ProductServiceImpl implements ICRUDProductService, IFilterProductSe
 
 	@Override
 	public Product create(Product product) throws Exception {
+		System.out.println("-----------------");
+		System.out.println(product);
 		if(product == null)throw new Exception("Product nuulll");
 		for(Product tempP: allProducts) {
-			if(tempP.getTitle().equals(product.getTitle()) && tempP.getDescription().equals(product.getDescription()))
+			if(tempP.getTitle().equals(product.getTitle()) && tempP.getDescription().equals(product.getDescription())) {
 				tempP.setQuantity(tempP.getQuantity()+1);
 				return tempP;
+			}
 		}
 		Product newProduct = new Product(product.getTitle(), product.getDescription(), product.getPrice(), product.getQuantity());
+		System.out.println("!!!!" + newProduct);
 		allProducts.add(newProduct);
 		return newProduct;
 	}
