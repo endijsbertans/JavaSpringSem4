@@ -89,15 +89,31 @@ public class ProductServiceImpl implements ICRUDProductService, IFilterProductSe
 		return filteredProducts;
 	}
 
+
 	@Override
 	public ArrayList<Product> filterByTitleOrDescription(String searchText) throws Exception {
-		if(searchText == null) throw new Exception("Text null");
+		if(searchText == null) throw new Exception("Wrong search text");
 		ArrayList<Product> filteredProducts = new ArrayList<>();
-		for(Product tempP: allProducts) {
-			if(tempP.getTitle().contains(searchText)||tempP.getDescription().contains(searchText))
+		for(Product tempP: allProducts)
+		{
+			if(tempP.getTitle().toLowerCase().contains(searchText.toLowerCase()) ||
+					tempP.getDescription().toLowerCase().contains(searchText.toLowerCase())) {
 				filteredProducts.add(tempP);
+			}
 		}
-		return null;
+		
+		return filteredProducts;	
+	}
+
+	@Override
+	public float calculateProductsTotalValue() throws Exception {
+		if(allProducts.isEmpty()) throw new Exception("There is no product in my web");
+
+		float result = 0;
+		for(Product tempP : allProducts) {
+			result+=tempP.getPrice() * tempP.getQuantity();
+		}
+		return result;
 	}
 
 

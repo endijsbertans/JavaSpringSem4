@@ -5,30 +5,32 @@
   <head>
     <title>Product/insert> </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	</head>
 
-  </head>
 
   <body>
-	<nav class="nav">
-		        <ul>
-		          <li>
-		            <a href="http://localhost:8080/product/all">All Products</a>
-		          </li>
-		          <li>
-		          <a href="http://localhost:8080/product/test">Product test</a>
-		          </li>
-		          <li>
-		            <a href="http://localhost:8080/hello/msg">Hello msg</a>
-		          </li>
-				  <li>
-				   <a href="http://localhost:8080/product/insert">Insert product</a>
-				  </li>
-				  <li>
-		          <li>
-		            <a href="https://github.com/endijsbertans/JavaSpringSem4" target="_blank">Git</a>
-		          </li>
-		        </ul>
-	</nav>
+
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		  <div class="container">
+		    <ul class="navbar-nav">
+		      <li class="nav-item">
+		        <a class="nav-link" href="http://localhost:8080/product/all">All Products</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="http://localhost:8080/product/test">Product Test</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="http://localhost:8080/hello/msg">Hello Message</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="https://github.com/endijsbertans/JavaSpringSem4" target="_blank">Git</a>
+		      </li>
+		    </ul>
+		  </div>
+		</nav>
+
 	<p>Lūdzu ievadiet produktu</p>
 		<form action="#" th:action="@{/product/insert}" th:object="${product}" th:method="post"  >
 			
