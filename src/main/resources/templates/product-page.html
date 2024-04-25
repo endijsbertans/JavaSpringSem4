@@ -21,25 +21,48 @@
 	        <a class="nav-link" href="https://github.com/endijsbertans/JavaSpringSem4" target="_blank">Git</a>
 	      </li>
 	    </ul>
+
+		<form class="form-inline" action="/product/info/filter/text" method="GET">
+		    <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search" aria-label="Search">
+		    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
+
+
+
 	  </div>
 	</nav>
-	<p th:text = "${mytitle}"></p>
-		  <table>
-		      <tr th:each="myobj : ${myobjs}">
-		          <td th:text="${myobj.id}"></td>
-		          <td th:text="${myobj.title}"></td>
-		          <td th:text="${myobj.description}"></td>
-		          <td th:text="${myobj.price}"></td>
-		          <td th:text="${myobj.quantity}"></td>
-		          <td>
-		              <a th:href="@{/product/update(id=${myobj.id})}" target="_self">Update</a>
-		          </td>
-				  <td>
-				      <a th:href="@{/product/delete(id=${myobj.id})}" target="_self" style="color:red;">Delete</a>
-				  </td>
-		      </tr>
-		  </table>
-		  <a class="nav-link" href="http://localhost:8080/product/insert">Insert Product</a>
+	<h3 th:text = "${mytitle}"></h3>
+	
+	<table class="table table-striped">
+	    <thead>
+	        <tr>
+	            <th>ID</th>
+	            <th>Title</th>
+	            <th>Description</th>
+	            <th>Price</th>
+	            <th>Quantity</th>
+	            <th>Update</th>
+	            <th>Delete</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr th:each="myobj : ${myobjs}">
+	            <td th:text="${myobj.id}"></td>
+	            <td th:text="${myobj.title}"></td>
+	            <td th:text="${myobj.description}"></td>
+	            <td th:text="${myobj.price}"></td>
+	            <td th:text="${myobj.quantity}"></td>
+	            <td>
+	                <a th:href="@{/product/update(id=${myobj.id})}" class="btn btn-primary btn-sm" target="_self">Update</a>
+	            </td>
+	            <td>
+	                <a th:href="@{/product/delete(id=${myobj.id})}" class="btn btn-danger btn-sm" target="_self">Delete</a>
+	            </td>
+	        </tr>
+	    </tbody>
+	</table>
+	<a th:href="@{/product/insert}" class="btn btn-primary" style="padding: 10px 20px; font-size: 16px;" target="_self">Insert</a>
+
 
 </body>
 

@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-	<nav class="nav">
-	        <ul>
-	          <li>
-	            <a href="http://localhost:8080/product/all">All Products</a>
-	          </li>
-	          <li>
-	          <a href="http://localhost:8080/product/test">Product test</a>
-	          </li>
-	          <li>
-	            <a href="http://localhost:8080/hello/msg">Hello msg</a>
-	          </li>
-			  <li>
-			   <a href="http://localhost:8080/product/insert">Insert product</a>
-			  </li>
-			  <li>
-	          <li>
-	            <a href="https://github.com/endijsbertans/JavaSpringSem4" target="_blank">Git</a>
-	          </li>
-	        </ul>
-	      </nav>
+	<head>
+	    <!-- Other meta tags, title, etc. -->
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <div class="container">
+	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="http://localhost:8080/product/all">All Products</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="http://localhost:8080/product/test">Product Test</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="http://localhost:8080/hello/msg">Hello Message</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="https://github.com/endijsbertans/JavaSpringSem4" target="_blank">Git</a>
+	      </li>
+	    </ul>
+	  </div>
+	</nav>
   <head>
-    <title>Products/title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
   </head>
 
   <body>
   
-    <p th:text="${mymsg}"></p>
+    <h1 th:text="${mymsg}"></h1>
   
   </body>
 
