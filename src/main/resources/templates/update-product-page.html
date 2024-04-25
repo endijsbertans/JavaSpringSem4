@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	
+  <head>
+    <title>Product/insert> </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  </head>
+
+  <body>
+	<nav class="nav">
+		        <ul>
+		          <li>
+		            <a href="http://localhost:8080/product/all">All Products</a>
+		          </li>
+		          <li>
+		          <a href="http://localhost:8080/product/test">Product test</a>
+		          </li>
+		          <li>
+		            <a href="http://localhost:8080/hello/msg">Hello msg</a>
+		          </li>
+				  <li>
+				   <a href="http://localhost:8080/product/insert">Insert product</a>
+				  </li>
+				  <li>
+		          <li>
+		            <a href="https://github.com/endijsbertans/JavaSpringSem4" target="_blank">Git</a>
+		          </li>
+		        </ul>
+	</nav>
+	<p>Lūdzu ievadiet produktu</p>
+	<form action="#" th:action="@{/product/update?id=__${id}__}" th:object="${product}" th:method="post"  >	
+			<table>
+				<tr>
+					<td>Nosaukums</td>
+					<td> <input type="text" th:field="*{title}"  />  </td>
+					<td th:if="${#fields.hasErrors('title')}" th:errors="*{title}"  ></td>
+				</tr>
+				
+				<tr>
+					<td>Apraksts</td>
+					<td> <input type="text" th:field="*{description}"  />  </td>
+					<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"  ></td>
+				</tr>
+				
+				<tr>
+					<td>Cena</td>
+					<td> <input type="text" th:field="*{price}"  />  </td>
+					<td th:if="${#fields.hasErrors('price')}" th:errors="*{price}"  ></td>
+				</tr>
+				
+				<tr>
+					<td>Daudzums</td>
+					<td> <input type="text" th:field="*{quantity}"  />  </td>
+					<td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"  ></td>
+				</tr>
+				
+				<tr>
+					<td></td>
+					<td> <input type="submit" title="Saglabāt" />  </td>
+				</tr>
+			</table>
+			
+		</form>
+  
+  </body>
+
+</html>

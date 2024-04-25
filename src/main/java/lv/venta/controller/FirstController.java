@@ -111,5 +111,52 @@ public class FirstController {
 	public String getError() {
 		return "error-page";
 	}
+	@GetMapping("/product/update") //localhost:8080/product/update?id=2
+	public String getProductUpateById(@RequestParam("id") int id, Model model ) {
+		
+		try {
+			Product product = crudService.retrieveById(id);
+			model.addAttribute("product", product);
+			model.addAttribute("id", id);
+			return "update-product-page";//tiek parādīta update-product-page.html lapa
+				
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "error-page"; // tiek parādīta error-page.html lapa
+		}
+	}
+	
+	@PostMapping("/product/update")
+	public String postProductInsert(@RequestParam("id") int id,  @Valid Product product, BindingResult result, Model model) {// iegūst redigēto produktu
+
+		if (result.hasErrors()) {
+			model.addAttribute("id", id);
+			return "update-product-page";
+		} else {
+
+			try {
+				crudService.updateById(id, product);
+				return "redirect:/product/all/" + id;
+			} catch (Exception e) {
+				return "redirect:/error";// pārlec uz citu endpointu
+			}
+		}
+
+	}
+	
+	@GetMapping("/product/delete") //localhost:8080/product/delete?id=2
+	public String getProductDeleteById(@RequestParam("id") int id, Model model ) {
+		
+		try {
+			crudService.deleteById(id);
+			model.addAttribute("myobjs", crudService.retrieveAll());
+			return "product-page";//tiek parādīta update-product-page.html lapa
+				
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "error-page"; // tiek parādīta error-page.html lapa
+		}
+	}
+	
 	
 }
