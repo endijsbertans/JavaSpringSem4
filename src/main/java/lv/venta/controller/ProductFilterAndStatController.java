@@ -66,5 +66,17 @@ public class ProductFilterAndStatController {
 		}
 	
 	}
-	
+	@GetMapping("/total") //localhost:8080/product/info/total
+	public String getProductInfoFilterByTitleOrDescriptionText(Model model)
+	{
+		try {
+			float result = filterService.calculateProductsTotalValue();
+			model.addAttribute("mymsg", "Total: " + result + " eur");//TODO noformatē tikai uz 2 cipariem aiz komata
+			return "product-page";
+		} catch (Exception e) {
+			model.addAttribute("msg", e.getMessage());
+			return "error-page"; // tiek parādīta error-page.html lapa
+		}
+
+	}
 }

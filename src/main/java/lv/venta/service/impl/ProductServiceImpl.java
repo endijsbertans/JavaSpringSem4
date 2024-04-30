@@ -3,6 +3,8 @@ package lv.venta.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import lv.venta.repo.IProductRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lv.venta.Product;
@@ -12,110 +14,102 @@ import lv.venta.service.IFilterProductService;
 @Service
 public class ProductServiceImpl implements ICRUDProductService, IFilterProductService{
 
-	ArrayList<Product> allProducts = new ArrayList<>(Arrays.asList(new Product("Abols", "Sarkans", 0.99f, 5),new Product("Zemene", "Salda", 1.23f, 3),new Product("Arbuzs", "Roza", 3.99f, 2)));
-	
+	@Autowired
+	private IProductRepo productRepo;
 
 	@Override
 	public Product create(Product product) throws Exception {
-		System.out.println("-----------------");
-		System.out.println(product);
-		if(product == null)throw new Exception("Product nuulll");
-		for(Product tempP: allProducts) {
-			if(tempP.getTitle().equals(product.getTitle()) && tempP.getDescription().equals(product.getDescription())) {
-				tempP.setQuantity(tempP.getQuantity()+1);
-				return tempP;
-			}
+		if(product == null) throw new Exception("Product is null");
+
+
+		Product productFromDB =
+				productRepo.findByTitleAndDescriptionAndPrice(product.getTitle(),
+						product.getDescription(), product.getPrice());
+
+		//noskaidrojam, vai tads jau eksistē
+		if(productFromDB != null) {
+			productFromDB.setQuantity
+					(productFromDB.getQuantity() + product.getQuantity());
+			productRepo.save(productFromDB);
+			return productFromDB;
 		}
-		Product newProduct = new Product(product.getTitle(), product.getDescription(), product.getPrice(), product.getQuantity());
-		System.out.println("!!!!" + newProduct);
-		allProducts.add(newProduct);
-		return newProduct;
+
+		Product storedProduct = productRepo.save(product);
+		return storedProduct;
 	}
 
 	@Override
 	public ArrayList<Product> retrieveAll() throws Exception {
-		if(allProducts.isEmpty()) throw new Exception("Product list empty");
-		return allProducts;
+		if(productRepo.count() == 0) throw new Exception("Product table is empty");
+		return (ArrayList<Product>) productRepo.findAll();
 	}
 
 	@Override
 	public Product retrieveById(int id) throws Exception {
-		if(id < 0) throw new Exception("invalid given ID");
-		for(Product tempP: allProducts) {
-			if(tempP.getId() == id)
-				return tempP;
+		if(id < 0) throw new Exception("Id should be positive");
+
+		if(productRepo.existsById(id))
+		{
+			return productRepo.findById(id).get();
 		}
-		throw new Exception("not found by id: " + id);
+
+		throw new Exception("Product with " + id + " is not found");
 	}
 
 	@Override
 	public void updateById(int id, Product product) throws Exception {
-		if(product == null)throw new Exception("Product nuulll");
 		Product updateProduct = retrieveById(id);
-		updateProduct.setPrice(product.getPrice());
+
 		updateProduct.setTitle(product.getTitle());
 		updateProduct.setDescription(product.getDescription());
 		updateProduct.setQuantity(product.getQuantity());
-		
+		updateProduct.setPrice(product.getPrice());
+		productRepo.save(updateProduct);//notiek Update arī DB līmenī
+
 	}
 
 	@Override
 	public Product deleteById(int id) throws Exception {
 		Product deleteProduct = retrieveById(id);
-		allProducts.remove(deleteProduct);
+		productRepo.delete(deleteProduct);
 		return deleteProduct;
 	}
+
 	@Override
-	public ArrayList<Product> filterProductByPriceTreshold(float priceTreshold) throws Exception {
-		if(priceTreshold <= 0 || priceTreshold > 1000)throw new Exception("Wrong price");
-		ArrayList<Product> filteredProducts = new ArrayList<>();
-		for(Product tempP: allProducts) {
-			if(tempP.getPrice() <= priceTreshold) {
-				filteredProducts.add(tempP);
-			}
-		}
+	public ArrayList<Product> filterProductByPriceThreshold(float priceThreshold) throws Exception {
+		if(priceThreshold < 0 || priceThreshold > 10000) throw new Exception("Wrong price threshold");
+
+		ArrayList<Product> filteredProducts =
+				productRepo.findByPriceLessThanEqual(priceThreshold);
+
 		return filteredProducts;
+
 	}
 
 	@Override
-	public ArrayList<Product> filterProductByQuantityTreshold(int quantityTreshold) throws Exception {
-		if(quantityTreshold <= 0 || quantityTreshold > 1000)throw new Exception("Wrong quantity");
-		ArrayList<Product> filteredProducts = new ArrayList<>();
-		for(Product tempP: allProducts) {
-			if(tempP.getQuantity() <= quantityTreshold) {
-				filteredProducts.add(tempP);
-			}
-		}
+	public ArrayList<Product> filterProductByQuantityThreshold(int quantityThreshold) throws Exception {
+		if(quantityThreshold < 0 || quantityThreshold > 100) throw new Exception("Wrong quantity threshold");
+
+		ArrayList<Product> filteredProducts =
+				productRepo.findByQuantityLessThanEqual(quantityThreshold);
 		return filteredProducts;
 	}
-
 
 	@Override
 	public ArrayList<Product> filterByTitleOrDescription(String searchText) throws Exception {
 		if(searchText == null) throw new Exception("Wrong search text");
-		ArrayList<Product> filteredProducts = new ArrayList<>();
-		for(Product tempP: allProducts)
-		{
-			if(tempP.getTitle().toLowerCase().contains(searchText.toLowerCase()) ||
-					tempP.getDescription().toLowerCase().contains(searchText.toLowerCase())) {
-				filteredProducts.add(tempP);
-			}
-		}
-		
-		return filteredProducts;	
+		ArrayList<Product> filteredProducts =
+				productRepo.findByTitleIgnoreCaseContainingOrDescriptionIgnoreCaseContaining(searchText, searchText);
+
+		return filteredProducts;
 	}
 
 	@Override
 	public float calculateProductsTotalValue() throws Exception {
-		if(allProducts.isEmpty()) throw new Exception("There is no product in my web");
+		if(productRepo.count()==0) throw new Exception("There is no product in my web");
 
-		float result = 0;
-		for(Product tempP : allProducts) {
-			result+=tempP.getPrice() * tempP.getQuantity();
-		}
+		float result = productRepo.calculateTotalValueOfDBProducts();
 		return result;
 	}
-
-
 
 }
