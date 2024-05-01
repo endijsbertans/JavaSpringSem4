@@ -24,7 +24,7 @@ public class ProductFilterAndStatController {
 			Model model)
 	{
 		try {
-			ArrayList<Product> result = filterService.filterProductByPriceTreshold(threshold);
+			ArrayList<Product> result = filterService.filterProductByPriceThreshold(threshold);
 			model.addAttribute("myobjs", result);
 			model.addAttribute("mytitle", "Products filtered by price");
 			return "product-page";
@@ -40,7 +40,7 @@ public class ProductFilterAndStatController {
 			Model model)
 	{
 		try {
-			ArrayList<Product> result = filterService.filterProductByQuantityTreshold(threshold);
+			ArrayList<Product> result = filterService.filterProductByQuantityThreshold(threshold);
 			model.addAttribute("myobjs", result);
 			model.addAttribute("mytitle", "Products filtered by quantity");
 			return "product-page";
@@ -67,16 +67,17 @@ public class ProductFilterAndStatController {
 	
 	}
 	@GetMapping("/total") //localhost:8080/product/info/total
-	public String getProductInfoFilterByTitleOrDescriptionText(Model model)
+	public String getProductTotal(Model model)
 	{
 		try {
 			float result = filterService.calculateProductsTotalValue();
 			model.addAttribute("mymsg", "Total: " + result + " eur");//TODO noformatē tikai uz 2 cipariem aiz komata
-			return "product-page";
+			return "msg-page";
 		} catch (Exception e) {
 			model.addAttribute("msg", e.getMessage());
 			return "error-page"; // tiek parādīta error-page.html lapa
 		}
 
 	}
+
 }

@@ -1,7 +1,6 @@
 package lv.venta.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import lv.venta.repo.IProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,25 +74,7 @@ public class ProductServiceImpl implements ICRUDProductService, IFilterProductSe
 		return deleteProduct;
 	}
 
-	@Override
-	public ArrayList<Product> filterProductByPriceThreshold(float priceThreshold) throws Exception {
-		if(priceThreshold < 0 || priceThreshold > 10000) throw new Exception("Wrong price threshold");
 
-		ArrayList<Product> filteredProducts =
-				productRepo.findByPriceLessThanEqual(priceThreshold);
-
-		return filteredProducts;
-
-	}
-
-	@Override
-	public ArrayList<Product> filterProductByQuantityThreshold(int quantityThreshold) throws Exception {
-		if(quantityThreshold < 0 || quantityThreshold > 100) throw new Exception("Wrong quantity threshold");
-
-		ArrayList<Product> filteredProducts =
-				productRepo.findByQuantityLessThanEqual(quantityThreshold);
-		return filteredProducts;
-	}
 
 	@Override
 	public ArrayList<Product> filterByTitleOrDescription(String searchText) throws Exception {
@@ -112,4 +93,15 @@ public class ProductServiceImpl implements ICRUDProductService, IFilterProductSe
 		return result;
 	}
 
+	@Override
+	public ArrayList<Product> filterProductByPriceThreshold(float priceThreshold) throws Exception {
+		if(priceThreshold < 0 || priceThreshold > 10000) throw new Exception("Wrong price threshold");
+		return productRepo.findByPriceLessThanEqual(priceThreshold);
+	}
+
+	@Override
+	public ArrayList<Product> filterProductByQuantityThreshold(int quantityThreshold) throws Exception {
+		if(quantityThreshold < 0 || quantityThreshold > 100) throw new Exception("Wrong quantity threshold");
+		return productRepo.findByQuantityLessThanEqual(quantityThreshold);
+	}
 }
